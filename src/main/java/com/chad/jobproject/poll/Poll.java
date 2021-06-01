@@ -2,10 +2,9 @@ package com.chad.jobproject.poll;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.sql.Time;
-import java.sql.Timestamp;
+import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.Objects;
+
 
 @Entity
 @Table(name="poll")
@@ -15,38 +14,37 @@ public class Poll {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotEmpty(message = "Name must not be empty")
+    @Size(min=2, max=30)
     private String name;
-    private Timestamp time;
+    Date date = new Date();
     @NotEmpty(message = "poll question can't be empty")
+    @Size(min=2, max=255)
     private String question;
     @NotEmpty(message = "option 1 cant be empty")
+    @Size(min=2, max=255)
     private String option1;
     @NotEmpty(message = "option 2 cant be empty")
+    @Size(min=2, max=255)
     private String option2;
     @NotEmpty(message = "option 3 cant be empty")
+    @Size(min=2, max=255)
     private String option3;
+    private int vote1;
+    private int vote2;
+    private int vote3;
 
     public Poll() {}
-
     public Poll(Poll poll) {
         this.id = poll.id;
         this.name = poll.name;
-        this.time = poll.time;
+        this.date = poll.date;
         this.question = poll.question;
         this.option1 = poll.option1;
         this.option2 = poll.option2;
         this.option3 = poll.option3;
-    }
-
-    public Poll(Long id, String name, Timestamp time, String question, String option1, String option2, String option3) {
-        this.id = id;
-        this.name = name;
-        this.time = time;
-        this.question = question;
-        this.option1 = option1;
-        this.option2 = option2;
-        this.option3 = option3;
-
+        this.vote1 = poll.vote1;
+        this.vote2 = poll.vote2;
+        this.vote3 = poll.vote3;
     }
 
     public Long getId() {
@@ -65,12 +63,12 @@ public class Poll {
         this.name = name;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getQuestion() {
@@ -105,29 +103,43 @@ public class Poll {
         this.option3 = option3;
     }
 
-    @Override
-    public String toString() {
-        return "Poll{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", time=" + time +
-                ", question='" + question + '\'' +
-                ", option1='" + option1 + '\'' +
-                ", option2='" + option2 + '\'' +
-                ", option3='" + option3 + '\'' +
-                '}';
+    public int getVote1() {
+        return vote1;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
-        Poll poll = (Poll) o;
-        return id.equals(poll.id) && name.equals(poll.name) && time.equals(poll.time) && question.equals(poll.question) && option1.equals(poll.option1) && option2.equals(poll.option2) && option3.equals(poll.option3);
+    public void setVote1(int vote1) {
+        this.vote1 = vote1;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, time, question, option1, option2, option3);
+    public int getVote2() {
+        return vote2;
     }
+
+    public void setVote2(int vote2) {
+        this.vote2 = vote2;
+    }
+
+    public int getVote3() {
+        return vote3;
+    }
+
+    public void setVote3(int vote3) {
+        this.vote3 = vote3;
+    }
+
+    public Poll(Long id, String name, Date date, String question, String option1, String option2, String option3, int vote1, int vote2, int vote3) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.question = question;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.vote1 = vote1;
+        this.vote2 = vote2;
+        this.vote3 = vote3;
+
+    }
+
+
 }
